@@ -19,11 +19,11 @@ Never commit the token. Never put it in README URLs.
 
 ## 3. Point the profile READMEs
 
-Replace every occurrence of:
+READMEs currently use a community mirror while the official demo often returns 503:
 
-`https://github-readme-stats.vercel.app`
+`https://github-readme-stats-one-bice.vercel.app`
 
-with:
+After you deploy your own instance, replace that host (and any leftover `github-readme-stats.vercel.app`) with:
 
 `https://YOUR_PROJECT.vercel.app`
 
@@ -31,7 +31,7 @@ in `README.md` and `README.tr.md`.
 
 Keep query params (`username=eminwhocodes`, colors) unchanged.
 
-Activity graph (`github-readme-activity-graph.vercel.app`) is separate; leave public or self-host later. Unified commit counts for private/org primarily come from **github-readme-stats** with PAT.
+Activity graph (`github-readme-activity-graph.vercel.app`) is separate; leave public or self-host later. Unified commit counts for private/org primarily come from **your** github-readme-stats deploy with PAT.
 
 ## 4. Profile contribution graph
 

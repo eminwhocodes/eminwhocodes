@@ -1,61 +1,70 @@
 <div align="center">
 
-[English](./README.md) · [Türkçe](./README.tr.md)
+[![English](https://img.shields.io/badge/lang-English-64748b?style=for-the-badge&labelColor=0b1220)](./README.md)
+[![Türkçe](https://img.shields.io/badge/lang-Türkçe-22d3ee?style=for-the-badge&labelColor=0b1220)](./README.tr.md)
 
-![banner](./assets/banner.svg)
-
-### Yazılım Mimarı
+<img src="./assets/banner.svg" alt="Emin — Software Architect" width="100%" />
 
 Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerden daemon’lara, web uygulamalarına ve çevre araçlara. Küçük bir ekiple teslimatı yönetiyor; net sınırlar, güvenilir operasyon ve sürdürülebilir kod peşindeyim.
 
-[GitHub](https://github.com/eminwhocodes) · [LinkedIn](https://www.linkedin.com/in/eminwhocodes) · [emin@codron.co](mailto:emin@codron.co)
+[![GitHub](https://img.shields.io/badge/GitHub-eminwhocodes-0b1220?style=for-the-badge&logo=github&logoColor=22d3ee)](https://github.com/eminwhocodes)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-eminwhocodes-0b1220?style=for-the-badge&logo=linkedin&logoColor=22d3ee)](https://www.linkedin.com/in/eminwhocodes)
+[![Email](https://img.shields.io/badge/Email-emin%40codron.co-0b1220?style=for-the-badge&logo=gmail&logoColor=22d3ee)](mailto:emin@codron.co)
 
 </div>
 
-## Teknoloji Yığını
+<br />
+
+## Teknoloji
 
 <p align="center">
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=php,laravel,nodejs,react,nextjs,cs,dotnet,python,docker,bash&theme=dark" alt="Teknoloji yığını" />
-  </a>
+  <img src="https://skillicons.dev/icons?i=php,laravel,nodejs,react,nextjs,cs,dotnet,python,docker,bash&theme=dark" alt="Teknoloji yığını" />
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Daemon%20%2F%20Worker-22d3ee?style=for-the-badge&logoColor=0b1220&labelColor=0b1220" alt="Daemon / Worker" />
+  <img src="https://img.shields.io/badge/Daemon-22d3ee?style=flat-square&labelColor=0b1220&color=22d3ee" alt="Daemon" />
+  <img src="https://img.shields.io/badge/Worker-38bdf8?style=flat-square&labelColor=0b1220&color=38bdf8" alt="Worker" />
+  <img src="https://img.shields.io/badge/Entegrasyon-67e8f9?style=flat-square&labelColor=0b1220&color=67e8f9" alt="Entegrasyon" />
 </p>
 
 ## Ekip
 
 | İsim | Rol |
-|------|-----|
-| Emin | Yazılım Mimarı |
+|:-----|:-----|
+| **Emin** | Software Architect |
 | Mücahit Y. | Full Stack |
-| Halil Ç. | Proje Yöneticisi & Destek |
+| Halil Ç. | Project Manager & Support |
 | Musa G. | Frontend |
 
 ## Odak Alanları
 
-- Müşteri platformları ve portaller
-- Dahili API’ler ve entegrasyonlar
-- Arka plan daemon / worker’ları
-- E-ticaret ve operasyon otomasyonu
-- Geliştirici araçları ve Windows yardımcıları
+<p align="center">
+  <img src="https://img.shields.io/badge/Müşteri%20platformları%20%26%20portaller-0b1220?style=for-the-badge&color=0b1220&labelColor=22d3ee" alt="Platformlar" />
+  <img src="https://img.shields.io/badge/Dahili%20API%20%26%20entegrasyonlar-0b1220?style=for-the-badge&color=0b1220&labelColor=22d3ee" alt="API" />
+  <img src="https://img.shields.io/badge/Arka%20plan%20daemon%20%2F%20worker-0b1220?style=for-the-badge&color=0b1220&labelColor=22d3ee" alt="Daemon" />
+  <img src="https://img.shields.io/badge/E--ticaret%20%26%20ops%20otomasyonu-0b1220?style=for-the-badge&color=0b1220&labelColor=22d3ee" alt="E-ticaret" />
+  <img src="https://img.shields.io/badge/Geliştirici%20araçları%20%26%20Windows-0b1220?style=for-the-badge&color=0b1220&labelColor=22d3ee" alt="Araçlar" />
+</p>
 
 ## Aktivite
 
-<!-- Birleşik istatistik: kişisel public + private + org (self-hosted PAT sonrası). Private/public ayrımı yok. -->
+<!-- Birleşik stats: resmi vercel 503 iken community mirror. Private+org için STATS.md. -->
 
 <div align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=eminwhocodes&show_icons=true&theme=radical&hide_border=true&bg_color=0b1220&title_color=22d3ee&icon_color=22d3ee&text_color=e2e8f0&ring_color=22d3ee" alt="GitHub istatistikleri" />
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=eminwhocodes&layout=compact&theme=radical&hide_border=true&bg_color=0b1220&title_color=22d3ee&text_color=e2e8f0" alt="En çok kullanılan diller" />
+  <img height="165" src="https://github-readme-stats-one-bice.vercel.app/api?username=eminwhocodes&show_icons=true&hide_border=true&bg_color=0b1220&title_color=22d3ee&icon_color=22d3ee&text_color=e2e8f0&ring_color=22d3ee" alt="GitHub istatistikleri" />
+  <img height="165" src="https://github-readme-stats-one-bice.vercel.app/api/top-langs/?username=eminwhocodes&layout=compact&hide_border=true&bg_color=0b1220&title_color=22d3ee&text_color=e2e8f0" alt="En çok kullanılan diller" />
 </div>
+
+<br />
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=eminwhocodes&bg_color=0b1220&color=22d3ee&line=38bdf8&point=e2e8f0&area=true&hide_border=true" alt="Aktivite grafiği" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=eminwhocodes&bg_color=0b1220&color=22d3ee&line=38bdf8&point=e2e8f0&area=true&hide_border=true" alt="Aktivite grafiği" width="100%" />
 </div>
 
-## Öne Çıkan Public Projeler
+## Öne Çıkan Projeler
 
-- **[pc-yer-acma](https://github.com/eminwhocodes/pc-yer-acma)** — Docker/Drive temizleme arayüzlü Windows disk kullanım analizi
-- **[gnu-todo](https://github.com/eminwhocodes/gnu-todo)** — Shell araçları
-- **[dev-toys-onayliyorum](https://github.com/eminwhocodes/dev-toys-onayliyorum)** — C# yardımcı araç
+| Proje | Ne işe yarar |
+|:------|:-------------|
+| **[pc-yer-acma](https://github.com/eminwhocodes/pc-yer-acma)** | Docker/Drive temizleme arayüzlü Windows disk analiz aracı |
+| **[gnu-todo](https://github.com/eminwhocodes/gnu-todo)** | Shell araçları |
+| **[dev-toys-onayliyorum](https://github.com/eminwhocodes/dev-toys-onayliyorum)** | C# yardımcı araç |
