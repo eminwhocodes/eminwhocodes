@@ -1,0 +1,39 @@
+name: Refresh profile stats
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate stats SVGs
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_STATS_PAT }}
+        shell: pwsh
+        run: |
+          if (-not $env:GH_TOKEN) {
+            Write-Error "Add repository secret PROFILE_STATS_PAT (classic PAT with repo scope; authorize org SSO if needed)."
+            exit 1
+          }
+          pwsh -NoProfile -File .\scripts\generate-stats.ps1
+
+      - name: Commit and push if changed
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/stats.svg assets/top-langs.svg
+          if (git diff --cached --quiet) {
+            Write-Host "No changes"
+            exit 0
+          }
+          git commit -m "chore: refresh profile stats cards (private+public aggregate)"
+          git push

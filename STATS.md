@@ -1,46 +1,48 @@
-# Self-hosted GitHub Readme Stats
+# Private + public + org stats on the profile README
 
-Private personal + private org activity is included only when README cards point at **your** deployment with a PAT that can read those repos.
+Public mirrors (vercel demos) **cannot** see your private or org repos. This profile uses **local SVG cards** generated with a token that can.
 
-## 1. Create PAT
+## How it works
 
-1. GitHub → Settings → Developer settings → Personal access tokens.
-2. Classic token scopes: at least `repo` (private repo read). Fine-grained: repository access to needed private repos + org repos.
-3. For orgs with SAML SSO: click **Authorize** next to each org on the token.
+1. `scripts/generate-stats.ps1` calls GitHub GraphQL as you (or a PAT).
+2. It writes aggregate cards to `assets/stats.svg` and `assets/top-langs.svg`.
+3. Language totals include **private/org** code size — **repo names are never written**.
+4. README embeds those local files (no third-party stats host required).
 
-Never commit the token. Never put it in README URLs.
+## One-time setup (auto refresh)
 
-## 2. Deploy github-readme-stats
+1. GitHub → Settings → Developer settings → **Personal access tokens (classic)**.
+2. Generate token with at least **`repo`** scope.
+3. If orgs use SAML SSO: on the token page click **Authorize** for each org (`kanatmedya`, `codron-co`, …).
+4. Open https://github.com/eminwhocodes/eminwhocodes/settings/secrets/actions  
+5. New secret name: **`PROFILE_STATS_PAT`** → paste the token.
+6. Actions → **Refresh profile stats** → **Run workflow**.
 
-1. Fork or import https://github.com/anuraghazra/github-readme-stats
-2. Deploy to Vercel (or similar).
-3. Set environment variable `PAT_1` (or as documented upstream) to the token.
-4. Note the production base URL, e.g. `https://YOUR_PROJECT.vercel.app`
+The workflow also runs daily at 06:00 UTC.
 
-## 3. Point the profile READMEs
+## Manual refresh (local)
 
-READMEs currently use a community mirror while the official demo often returns 503:
+```powershell
+cd c:\www\tek-seferlik-isler\eminwhocodes
+pwsh -File .\scripts\generate-stats.ps1 -Push
+```
 
-`https://github-readme-stats-one-bice.vercel.app`
+Uses your logged-in `gh` session (`gh auth login` / existing keyring token with `repo`).
 
-After you deploy your own instance, replace that host (and any leftover `github-readme-stats.vercel.app`) with:
+## Contribution graph on the profile page
 
-`https://YOUR_PROJECT.vercel.app`
+README cards ≠ the green contribution calendar.
 
-in `README.md` and `README.tr.md`.
+To show private squares on https://github.com/eminwhocodes :
 
-Keep query params (`username=eminwhocodes`, colors) unchanged.
+**Profile → Settings → Contributions & activity → Include private contributions on my profile**
 
-Activity graph (`github-readme-activity-graph.vercel.app`) is separate; leave public or self-host later. Unified commit counts for private/org primarily come from **your** github-readme-stats deploy with PAT.
+## Optional: official github-readme-stats look
 
-## 4. Profile contribution graph
+If you prefer the classic anuraghazra cards instead of local SVGs:
 
-GitHub → Profile → Settings → Contributions & activity → enable **Include private contributions on my profile**.
+1. Fork https://github.com/anuraghazra/github-readme-stats  
+2. Deploy to Vercel; set env `PAT_1` to the same classic PAT.  
+3. Point README `<img src>` hosts to your Vercel URL.
 
-## 5. Verify
-
-Open:
-
-`https://YOUR_PROJECT.vercel.app/api?username=eminwhocodes&show_icons=true`
-
-Confirm totals look higher than public-only (if you have private/org commits). Confirm README on https://github.com/eminwhocodes renders images.
+Local SVGs already cover the private/public aggregate need without Vercel.

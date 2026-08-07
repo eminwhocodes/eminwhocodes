@@ -48,11 +48,11 @@ Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerd
 
 ## Aktivite
 
-<!-- Birleşik stats: resmi vercel 503 iken community mirror. Private+org için STATS.md. -->
+<!-- Yerel kartlar: scripts/generate-stats.ps1 — private + public + org toplamları (repo adı yok). -->
 
 <div align="center">
-  <img height="165" src="https://github-readme-stats-one-bice.vercel.app/api?username=eminwhocodes&show_icons=true&hide_border=true&bg_color=0b1220&title_color=22d3ee&icon_color=22d3ee&text_color=e2e8f0&ring_color=22d3ee" alt="GitHub istatistikleri" />
-  <img height="165" src="https://github-readme-stats-one-bice.vercel.app/api/top-langs/?username=eminwhocodes&layout=compact&hide_border=true&bg_color=0b1220&title_color=22d3ee&text_color=e2e8f0" alt="En çok kullanılan diller" />
+  <img height="165" src="./assets/stats.svg" alt="GitHub istatistikleri" />
+  <img height="165" src="./assets/top-langs.svg" alt="En çok kullanılan diller" />
 </div>
 
 <br />
