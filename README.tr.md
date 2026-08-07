@@ -29,12 +29,9 @@ Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerd
 
 ## Ekip
 
-| İsim | Rol |
-|:-----|:-----|
-| **Emin** | Software Architect |
-| Mücahit Y. | Full Stack |
-| Halil Ç. | Project Manager & Support |
-| Musa G. | Frontend |
+<p align="center">
+  <img src="./assets/team.svg" alt="Ekip" width="100%" />
+</p>
 
 ## Odak Alanları
 
@@ -51,14 +48,14 @@ Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerd
 <!-- Yerel kartlar: scripts/generate-stats.ps1 — private + public + org toplamları (repo adı yok). -->
 
 <div align="center">
-  <img height="165" src="./assets/stats.svg" alt="GitHub istatistikleri" />
+  <img height="140" src="./assets/stats.svg" alt="GitHub istatistikleri" />
   <img height="165" src="./assets/top-langs.svg" alt="En çok kullanılan diller" />
 </div>
 
 <br />
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=eminwhocodes&bg_color=0b1220&color=22d3ee&line=38bdf8&point=e2e8f0&area=true&hide_border=true" alt="Aktivite grafiği" width="100%" />
+  <img src="./assets/activity-graph.svg" alt="Katkı aktivitesi" width="100%" />
 </div>
 
 ## Öne Çıkan Projeler

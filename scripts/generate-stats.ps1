@@ -141,6 +141,8 @@ $totalCommits = 0
 $privateCommits = 0
 $publicCommits = 0
 $privateCount = 0
+$personalCommits = 0
+$orgCommits = 0
 $langMap = @{}
 $bySource = @{}
 
@@ -153,6 +155,11 @@ foreach ($key in $repoByKey.Keys) {
     $privateCommits += $r.Commits
   } else {
     $publicCommits += $r.Commits
+  }
+  if ($r.Source -eq "personal") {
+    $personalCommits += $r.Commits
+  } else {
+    $orgCommits += $r.Commits
   }
   $src = $r.Source
   if (-not $bySource.ContainsKey($src)) { $bySource[$src] = 0 }
@@ -172,24 +179,69 @@ foreach ($key in $repoByKey.Keys) {
 $repoTotal = $repoByKey.Count
 $sourceSummary = ($bySource.GetEnumerator() | Sort-Object Name | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ", "
 Write-Host "repos_unique=$repoTotal private=$privateCount sources: $sourceSummary"
-Write-Host "commits_all=$totalCommits private_commits=$privateCommits public_commits=$publicCommits year_contrib_commits=$yearCommits"
+Write-Host "commits_all=$totalCommits private_commits=$privateCommits public_commits=$publicCommits personal_commits=$personalCommits org_commits=$orgCommits year_contrib_commits=$yearCommits"
 
 $langs = @($langMap.GetEnumerator() | Sort-Object { -$_.Value.size } | Select-Object -First 6)
 $totalLangSize = ($langs | ForEach-Object { $_.Value.size } | Measure-Object -Sum).Sum
 if ($totalLangSize -le 0) { $totalLangSize = 1 }
 
+# Contribution calendar (authenticated; day cells). Private day shading needs profile setting;
+# bars below use authored commits across private+org repos.
+$cal = Invoke-GhGraphql -Query 'query { viewer { contributionsCollection { contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } } } }'
+$weeks = @($cal.data.viewer.contributionsCollection.contributionCalendar.weeks)
+$calTotal = [int]$cal.data.viewer.contributionsCollection.contributionCalendar.totalContributions
+$maxDay = 1
+foreach ($w in $weeks) {
+  foreach ($d in $w.contributionDays) {
+    if ([int]$d.contributionCount -gt $maxDay) { $maxDay = [int]$d.contributionCount }
+  }
+}
+
+function Get-HeatColor([int]$count, [int]$max) {
+  if ($count -le 0) { return "#1e293b" }
+  $t = [math]::Min(1.0, $count / [double]$max)
+  if ($t -lt 0.25) { return "#0e7490" }
+  if ($t -lt 0.5) { return "#0891b2" }
+  if ($t -lt 0.75) { return "#22d3ee" }
+  return "#67e8f9"
+}
+
+$cell = 11
+$gap = 3
+$gridX = 24
+$gridY = 56
+$heatCells = New-Object System.Collections.Generic.List[string]
+for ($wi = 0; $wi -lt $weeks.Count; $wi++) {
+  $days = @($weeks[$wi].contributionDays)
+  for ($di = 0; $di -lt $days.Count; $di++) {
+    $count = [int]$days[$di].contributionCount
+    $color = Get-HeatColor $count $maxDay
+    $x = $gridX + $wi * ($cell + $gap)
+    $y = $gridY + $di * ($cell + $gap)
+    $heatCells.Add("<rect x=`"$x`" y=`"$y`" width=`"$cell`" height=`"$cell`" rx=`"2`" fill=`"$color`"/>") | Out-Null
+  }
+}
+$heatWidth = $gridX + ($weeks.Count * ($cell + $gap)) + 24
+$heatBottom = $gridY + 7 * ($cell + $gap) + 16
+
+# Personal vs org commit bars (includes private org work)
+$barMax = [math]::Max(1, [math]::Max($personalCommits, $orgCommits))
+$barTrack = 280
+$personalW = [math]::Max(4, [math]::Round($barTrack * $personalCommits / $barMax))
+$orgW = [math]::Max(4, [math]::Round($barTrack * $orgCommits / $barMax))
+$barY1 = $heatBottom + 28
+$barY2 = $barY1 + 36
+$activityHeight = $barY2 + 40
+
 $statsSvg = @"
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="210" viewBox="0 0 420 210" role="img" aria-label="GitHub stats">
-  <rect width="420" height="210" rx="8" fill="#0b1220"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="140" viewBox="0 0 420 140" role="img" aria-label="GitHub stats">
+  <rect width="420" height="140" rx="8" fill="#0b1220"/>
   <rect x="0" y="0" width="420" height="3" fill="#22d3ee"/>
   <text x="24" y="36" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#22d3ee">${login}'s GitHub Stats</text>
-  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#e2e8f0">
-    <text x="24" y="68">Total Stars</text><text x="300" y="68" fill="#22d3ee" font-weight="600">$stars</text>
-    <text x="24" y="94">Total Commits</text><text x="300" y="94" fill="#22d3ee" font-weight="600">$totalCommits</text>
-    <text x="24" y="120">Repositories</text><text x="300" y="120" fill="#22d3ee" font-weight="600">$repoTotal</text>
-    <text x="24" y="146">Pull Requests</text><text x="300" y="146" fill="#22d3ee" font-weight="600">$prs</text>
-    <text x="24" y="172">Issues</text><text x="300" y="172" fill="#22d3ee" font-weight="600">$issues</text>
-    <text x="24" y="198">Contributed to</text><text x="300" y="198" fill="#22d3ee" font-weight="600">$contributed</text>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#e2e8f0">
+    <text x="24" y="72">Total Stars</text><text x="300" y="72" fill="#22d3ee" font-weight="600">$stars</text>
+    <text x="24" y="100">Total Commits</text><text x="300" y="100" fill="#22d3ee" font-weight="600">$totalCommits</text>
+    <text x="24" y="128">Repositories</text><text x="300" y="128" fill="#22d3ee" font-weight="600">$repoTotal</text>
   </g>
 </svg>
 "@
@@ -220,20 +272,42 @@ $($langRows -join "`n")
 </svg>
 "@
 
+$activitySvg = @"
+<svg xmlns="http://www.w3.org/2000/svg" width="$heatWidth" height="$activityHeight" viewBox="0 0 $heatWidth $activityHeight" role="img" aria-label="Contribution activity">
+  <rect width="$heatWidth" height="$activityHeight" rx="8" fill="#0b1220"/>
+  <rect x="0" y="0" width="$heatWidth" height="3" fill="#22d3ee"/>
+  <text x="24" y="32" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#22d3ee">Contribution Graph</text>
+  <text x="24" y="48" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">Year grid: $calTotal contributions reported by GitHub · bars: authored commits incl. private/org</text>
+$($heatCells -join "`n")
+  <text x="24" y="$($heatBottom + 8)" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">Authored commits by scope</text>
+  <text x="24" y="$($barY1 + 2)" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#e2e8f0">Personal</text>
+  <rect x="120" y="$($barY1 - 10)" width="$barTrack" height="10" rx="5" fill="#1e293b"/>
+  <rect x="120" y="$($barY1 - 10)" width="$personalW" height="10" rx="5" fill="#22d3ee"/>
+  <text x="$($heatWidth - 24)" y="$($barY1 + 2)" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#22d3ee" font-weight="600">$personalCommits</text>
+  <text x="24" y="$($barY2 + 2)" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#e2e8f0">Organization</text>
+  <rect x="120" y="$($barY2 - 10)" width="$barTrack" height="10" rx="5" fill="#1e293b"/>
+  <rect x="120" y="$($barY2 - 10)" width="$orgW" height="10" rx="5" fill="#38bdf8"/>
+  <text x="$($heatWidth - 24)" y="$($barY2 + 2)" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#38bdf8" font-weight="600">$orgCommits</text>
+</svg>
+"@
+
 $statsPath = Join-Path $assets "stats.svg"
 $langsPath = Join-Path $assets "top-langs.svg"
+$activityPath = Join-Path $assets "activity-graph.svg"
 [System.IO.File]::WriteAllText($statsPath, $statsSvg.Trim() + "`n")
 [System.IO.File]::WriteAllText($langsPath, $langsSvg.Trim() + "`n")
+[System.IO.File]::WriteAllText($activityPath, $activitySvg.Trim() + "`n")
 
 Write-Host "Wrote $statsPath"
 Write-Host "Wrote $langsPath"
+Write-Host "Wrote $activityPath"
 Write-Host "commits=$totalCommits stars=$stars repos=$repoTotal contributed=$contributed followers=$followers"
 
 if ($Push) {
   Push-Location $root
   try {
-    git add assets/stats.svg assets/top-langs.svg
-    $pending = git status --porcelain -- assets/stats.svg assets/top-langs.svg
+    git add assets/stats.svg assets/top-langs.svg assets/activity-graph.svg
+    $pending = git status --porcelain -- assets/stats.svg assets/top-langs.svg assets/activity-graph.svg
     if ($pending) {
       git commit -m "chore: refresh profile stats cards (private+public aggregate)"
       git push origin HEAD
