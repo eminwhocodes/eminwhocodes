@@ -57,11 +57,3 @@ Designing and shipping systems end-to-end — from architecture and APIs to daem
 <div align="center">
   <img src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/activity-graph.png" alt="Contribution activity" width="900" />
 </div>
-
-## Public Highlights
-
-| Project | What it is |
-|:--------|:-----------|
-| **[pc-yer-acma](https://github.com/eminwhocodes/pc-yer-acma)** | Windows disk usage analyzer with Docker/Drive cleanup UI |
-| **[gnu-todo](https://github.com/eminwhocodes/gnu-todo)** | Shell tooling |
-| **[dev-toys-onayliyorum](https://github.com/eminwhocodes/dev-toys-onayliyorum)** | C# utility |

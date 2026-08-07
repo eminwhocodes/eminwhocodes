@@ -57,11 +57,3 @@ Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerd
 <div align="center">
   <img src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/activity-graph.png" alt="Katki aktivitesi" width="900" />
 </div>
-
-## Öne Çıkan Projeler
-
-| Proje | Ne işe yarar |
-|:------|:-------------|
-| **[pc-yer-acma](https://github.com/eminwhocodes/pc-yer-acma)** | Docker/Drive temizleme arayüzlü Windows disk analiz aracı |
-| **[gnu-todo](https://github.com/eminwhocodes/gnu-todo)** | Shell araçları |
-| **[dev-toys-onayliyorum](https://github.com/eminwhocodes/dev-toys-onayliyorum)** | C# yardımcı araç |
