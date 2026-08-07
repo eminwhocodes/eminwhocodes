@@ -13,10 +13,14 @@ Public mirrors (vercel demos) **cannot** see your private or org repos. This pro
 
 1. GitHub → Settings → Developer settings → **Personal access tokens (classic)**.
 2. Generate token with at least **`repo`** scope.
-3. If orgs use SAML SSO: on the token page click **Authorize** for each org (`kanatmedya`, `codron-co`, …).
+3. Org access (önemli):
+   - **SAML SSO’lu org:** https://github.com/settings/tokens → token satırında **Configure SSO** / **Enable SSO** → ilgili org’larda **Authorize**.
+   - **SSO yoksa** bu buton **görünmez** (normal). O zaman classic `repo` token, üye olduğun private org repolarına erişmeli.
+   - Hâlâ org gelmiyorsa org sahibi: **Org → Settings → Personal access tokens** (veya Third-party access) → classic PAT’lere izin verildiğinden emin olsun.
 4. Open https://github.com/eminwhocodes/eminwhocodes/settings/secrets/actions  
-5. New secret name: **`PROFILE_STATS_PAT`** → paste the token.
+5. New secret name: **`PROFILE_STATS_PAT`** → paste the token (eski secret varsa Update).
 6. Actions → **Refresh profile stats** → **Run workflow**.
+7. Workflow log’da `org_owners=...` satırına bak: org isimleri yazıyorsa token org’u görüyor demektir.
 
 The workflow also runs daily at 06:00 UTC.
 

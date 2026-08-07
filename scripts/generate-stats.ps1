@@ -41,6 +41,9 @@ query {
     repositories(first: 100, ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], isFork: false) {
       totalCount
       nodes {
+        nameWithOwner
+        isPrivate
+        owner { login }
         stargazerCount
         languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
           edges { size node { name color } }
@@ -61,7 +64,13 @@ $totalContrib = [int]$c.contributionCalendar.totalContributions
 
 $stars = 0
 $langMap = @{}
+$privateCount = 0
+$orgOwners = [System.Collections.Generic.HashSet[string]]::new()
+$login = $v.login
 foreach ($node in $repoData.data.viewer.repositories.nodes) {
+  if ($node.isPrivate) { $privateCount++ }
+  $ownerLogin = $node.owner.login
+  if ($ownerLogin -and $ownerLogin -ne $login) { [void]$orgOwners.Add($ownerLogin) }
   $stars += [int]$node.stargazerCount
   foreach ($edge in $node.languages.edges) {
     $name = $edge.node.name
@@ -73,6 +82,10 @@ foreach ($node in $repoData.data.viewer.repositories.nodes) {
     if ($edge.node.color) { $langMap[$name].color = $edge.node.color }
   }
 }
+
+$repoTotal = [int]$repoData.data.viewer.repositories.totalCount
+$orgList = if ($orgOwners.Count -gt 0) { ($orgOwners | Sort-Object) -join ", " } else { "(none — token may lack org access)" }
+Write-Host "repos_visible=$repoTotal private=$privateCount org_owners=$orgList"
 
 $langs = $langMap.GetEnumerator() |
   Sort-Object { -$_.Value.size } |
