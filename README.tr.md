@@ -3,7 +3,7 @@
 [![English](https://img.shields.io/badge/lang-English-64748b?style=for-the-badge&labelColor=0b1220)](./README.md)
 [![Türkçe](https://img.shields.io/badge/lang-Türkçe-22d3ee?style=for-the-badge&labelColor=0b1220)](./README.tr.md)
 
-<img src="./assets/banner.svg" alt="Emin — Software Architect" width="100%" />
+<img src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/banner.svg" alt="Emin — Software Architect" width="100%" />
 
 Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerden daemon’lara, web uygulamalarına ve çevre araçlara. Küçük bir ekiple teslimatı yönetiyor; net sınırlar, güvenilir operasyon ve sürdürülebilir kod peşindeyim.
 
@@ -30,7 +30,7 @@ Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerd
 ## Ekip
 
 <p align="center">
-  <img src="./assets/team.svg" alt="Ekip" width="100%" />
+  <img src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/team.png" alt="Ekip" width="900" />
 </p>
 
 ## Odak Alanları
@@ -48,14 +48,14 @@ Uçtan uca sistemler tasarlıyor ve hayata geçiriyorum — mimari ve API’lerd
 <!-- Yerel kartlar: scripts/generate-stats.ps1 — private + public + org toplamları (repo adı yok). -->
 
 <div align="center">
-  <img height="140" src="./assets/stats.svg" alt="GitHub istatistikleri" />
-  <img height="165" src="./assets/top-langs.svg" alt="En çok kullanılan diller" />
+  <img height="140" src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/stats.svg" alt="GitHub istatistikleri" />
+  <img height="165" src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/top-langs.svg" alt="En cok kullanilan diller" />
 </div>
 
 <br />
 
 <div align="center">
-  <img src="./assets/activity-graph.svg" alt="Katkı aktivitesi" width="100%" />
+  <img src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/activity-graph.svg" alt="Katki aktivitesi" width="900" />
 </div>
 
 ## Öne Çıkan Projeler
