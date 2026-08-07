@@ -19,8 +19,12 @@ function Escape-Xml([string]$s) {
   return ($s -replace "&", "&amp;" -replace "<", "&lt;" -replace ">", "&gt;" -replace '"', "&quot;")
 }
 
-$contrib = gh api graphql -f query='
-query {
+$viewerMeta = gh api graphql -f query='query { viewer { id login } }' | ConvertFrom-Json
+$authorId = $viewerMeta.data.viewer.id
+$login = $viewerMeta.data.viewer.login
+
+$payload = gh api graphql -f query='
+query ($authorId: ID!) {
   viewer {
     login
     followers { totalCount }
@@ -32,30 +36,32 @@ query {
       totalRepositoriesWithContributedCommits
       contributionCalendar { totalContributions }
     }
-  }
-}' | ConvertFrom-Json
-
-$repoData = gh api graphql -f query='
-query {
-  viewer {
     repositories(first: 100, ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], isFork: false) {
       totalCount
       nodes {
-        nameWithOwner
         isPrivate
         owner { login }
         stargazerCount
         languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
           edges { size node { name color } }
         }
+        defaultBranchRef {
+          target {
+            ... on Commit {
+              history(author: { id: $authorId }) {
+                totalCount
+              }
+            }
+          }
+        }
       }
     }
   }
-}' | ConvertFrom-Json
+}' -f authorId="$authorId" | ConvertFrom-Json
 
-$v = $contrib.data.viewer
+$v = $payload.data.viewer
 $c = $v.contributionsCollection
-$commits = [int]$c.totalCommitContributions + [int]$c.restrictedContributionsCount
+$yearCommits = [int]$c.totalCommitContributions + [int]$c.restrictedContributionsCount
 $prs = [int]$c.totalPullRequestContributions
 $issues = [int]$c.totalIssueContributions
 $contributed = [int]$c.totalRepositoriesWithContributedCommits
@@ -63,14 +69,29 @@ $followers = [int]$v.followers.totalCount
 $totalContrib = [int]$c.contributionCalendar.totalContributions
 
 $stars = 0
+$totalCommits = 0
+$privateCommits = 0
+$publicCommits = 0
 $langMap = @{}
 $privateCount = 0
 $orgOwners = [System.Collections.Generic.HashSet[string]]::new()
-$login = $v.login
-foreach ($node in $repoData.data.viewer.repositories.nodes) {
-  if ($node.isPrivate) { $privateCount++ }
+
+foreach ($node in $v.repositories.nodes) {
+  $authored = 0
+  if ($node.defaultBranchRef -and $node.defaultBranchRef.target -and $node.defaultBranchRef.target.history) {
+    $authored = [int]$node.defaultBranchRef.target.history.totalCount
+  }
+  $totalCommits += $authored
+  if ($node.isPrivate) {
+    $privateCount++
+    $privateCommits += $authored
+  } else {
+    $publicCommits += $authored
+  }
+
   $ownerLogin = $node.owner.login
   if ($ownerLogin -and $ownerLogin -ne $login) { [void]$orgOwners.Add($ownerLogin) }
+
   $stars += [int]$node.stargazerCount
   foreach ($edge in $node.languages.edges) {
     $name = $edge.node.name
@@ -83,31 +104,28 @@ foreach ($node in $repoData.data.viewer.repositories.nodes) {
   }
 }
 
-$repoTotal = [int]$repoData.data.viewer.repositories.totalCount
+$repoTotal = [int]$v.repositories.totalCount
 $orgList = if ($orgOwners.Count -gt 0) { ($orgOwners | Sort-Object) -join ", " } else { "(none — token may lack org access)" }
 Write-Host "repos_visible=$repoTotal private=$privateCount org_owners=$orgList"
+Write-Host "commits_all=$totalCommits private_commits=$privateCommits public_commits=$publicCommits year_contrib_commits=$yearCommits"
 
-$langs = $langMap.GetEnumerator() |
-  Sort-Object { -$_.Value.size } |
-  Select-Object -First 6
-
+$langs = @($langMap.GetEnumerator() | Sort-Object { -$_.Value.size } | Select-Object -First 6)
 $totalLangSize = ($langs | ForEach-Object { $_.Value.size } | Measure-Object -Sum).Sum
 if ($totalLangSize -le 0) { $totalLangSize = 1 }
 
-$year = (Get-Date).Year
-
-# --- stats card ---
+# --- stats card (Total Commits = authored on all accessible repos, incl. private/org) ---
 $statsSvg = @"
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="195" viewBox="0 0 420 195" role="img" aria-label="GitHub stats">
-  <rect width="420" height="195" rx="8" fill="#0b1220"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="210" viewBox="0 0 420 210" role="img" aria-label="GitHub stats">
+  <rect width="420" height="210" rx="8" fill="#0b1220"/>
   <rect x="0" y="0" width="420" height="3" fill="#22d3ee"/>
-  <text x="24" y="38" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#22d3ee">eminwhocodes's GitHub Stats</text>
+  <text x="24" y="36" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#22d3ee">${login}'s GitHub Stats</text>
   <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#e2e8f0">
-    <text x="24" y="72">Total Stars</text><text x="280" y="72" fill="#22d3ee" font-weight="600">$stars</text>
-    <text x="24" y="98">Commits ($year)</text><text x="280" y="98" fill="#22d3ee" font-weight="600">$commits</text>
-    <text x="24" y="124">Pull Requests</text><text x="280" y="124" fill="#22d3ee" font-weight="600">$prs</text>
-    <text x="24" y="150">Issues</text><text x="280" y="150" fill="#22d3ee" font-weight="600">$issues</text>
-    <text x="24" y="176">Contributed to</text><text x="280" y="176" fill="#22d3ee" font-weight="600">$contributed</text>
+    <text x="24" y="68">Total Stars</text><text x="300" y="68" fill="#22d3ee" font-weight="600">$stars</text>
+    <text x="24" y="94">Total Commits</text><text x="300" y="94" fill="#22d3ee" font-weight="600">$totalCommits</text>
+    <text x="24" y="120">Repositories</text><text x="300" y="120" fill="#22d3ee" font-weight="600">$repoTotal</text>
+    <text x="24" y="146">Pull Requests</text><text x="300" y="146" fill="#22d3ee" font-weight="600">$prs</text>
+    <text x="24" y="172">Issues</text><text x="300" y="172" fill="#22d3ee" font-weight="600">$issues</text>
+    <text x="24" y="198">Contributed to</text><text x="300" y="198" fill="#22d3ee" font-weight="600">$contributed</text>
   </g>
 </svg>
 "@
@@ -128,10 +146,11 @@ $langRows = foreach ($entry in $langs) {
   $y += 28
   $row
 }
+$langsHeight = [math]::Max(195, $y + 16)
 
 $langsSvg = @"
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="195" viewBox="0 0 420 195" role="img" aria-label="Top languages">
-  <rect width="420" height="195" rx="8" fill="#0b1220"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="$langsHeight" viewBox="0 0 420 $langsHeight" role="img" aria-label="Top languages">
+  <rect width="420" height="$langsHeight" rx="8" fill="#0b1220"/>
   <rect x="0" y="0" width="420" height="3" fill="#22d3ee"/>
   <text x="24" y="38" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#22d3ee">Top Languages</text>
 $($langRows -join "`n")
@@ -145,7 +164,7 @@ $langsPath = Join-Path $assets "top-langs.svg"
 
 Write-Host "Wrote $statsPath"
 Write-Host "Wrote $langsPath"
-Write-Host "commits=$commits stars=$stars contributed=$contributed totalContributions=$totalContrib followers=$followers"
+Write-Host "commits=$totalCommits stars=$stars repos=$repoTotal contributed=$contributed followers=$followers"
 
 if ($Push) {
   Push-Location $root

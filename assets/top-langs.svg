@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="195" viewBox="0 0 420 195" role="img" aria-label="Top languages">
-  <rect width="420" height="195" rx="8" fill="#0b1220"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="256" viewBox="0 0 420 256" role="img" aria-label="Top languages">
+  <rect width="420" height="256" rx="8" fill="#0b1220"/>
   <rect x="0" y="0" width="420" height="3" fill="#22d3ee"/>
   <text x="24" y="38" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#22d3ee">Top Languages</text>
   <text x="24" y="72" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#e2e8f0">Python</text>
