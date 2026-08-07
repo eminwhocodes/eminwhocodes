@@ -55,7 +55,7 @@ Designing and shipping systems end-to-end — from architecture and APIs to daem
 <br />
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/activity-graph.svg" alt="Contribution activity" width="900" />
+  <img src="https://raw.githubusercontent.com/eminwhocodes/eminwhocodes/main/assets/activity-graph.png" alt="Contribution activity" width="900" />
 </div>
 
 ## Public Highlights
