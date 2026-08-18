@@ -19,7 +19,7 @@
   <text x="28" y="82" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">Mon</text>
   <text x="28" y="112" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">Wed</text>
   <text x="28" y="142" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">Fri</text>
-<rect x="48" y="72" width="12" height="12" rx="2" fill="#1e293b"/>
+<rect x="48" y="72" width="12" height="12" rx="2" fill="#0b1220"/>
 <rect x="48" y="87" width="12" height="12" rx="2" fill="#1e293b"/>
 <rect x="48" y="102" width="12" height="12" rx="2" fill="#1e293b"/>
 <rect x="48" y="117" width="12" height="12" rx="2" fill="#1e293b"/>
@@ -385,7 +385,7 @@
 <rect x="813" y="162" width="12" height="12" rx="2" fill="#0e4429"/>
 <rect x="828" y="72" width="12" height="12" rx="2" fill="#0e4429"/>
 <rect x="828" y="87" width="12" height="12" rx="2" fill="#0e4429"/>
-<rect x="828" y="102" width="12" height="12" rx="2" fill="#0b1220"/>
+<rect x="828" y="102" width="12" height="12" rx="2" fill="#1e293b"/>
 <rect x="828" y="117" width="12" height="12" rx="2" fill="#0b1220"/>
 <rect x="828" y="132" width="12" height="12" rx="2" fill="#0b1220"/>
 <rect x="828" y="147" width="12" height="12" rx="2" fill="#0b1220"/>
