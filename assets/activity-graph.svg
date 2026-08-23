@@ -24,7 +24,7 @@
 <rect x="48" y="102" width="12" height="12" rx="2" fill="#0b1220"/>
 <rect x="48" y="117" width="12" height="12" rx="2" fill="#0b1220"/>
 <rect x="48" y="132" width="12" height="12" rx="2" fill="#0b1220"/>
-<rect x="48" y="147" width="12" height="12" rx="2" fill="#1e293b"/>
+<rect x="48" y="147" width="12" height="12" rx="2" fill="#0b1220"/>
 <rect x="48" y="162" width="12" height="12" rx="2" fill="#1e293b"/>
 <rect x="63" y="72" width="12" height="12" rx="2" fill="#1e293b"/>
 <rect x="63" y="87" width="12" height="12" rx="2" fill="#1e293b"/>
@@ -390,6 +390,13 @@
 <rect x="828" y="132" width="12" height="12" rx="2" fill="#0e4429"/>
 <rect x="828" y="147" width="12" height="12" rx="2" fill="#0e4429"/>
 <rect x="828" y="162" width="12" height="12" rx="2" fill="#1e293b"/>
+<rect x="843" y="72" width="12" height="12" rx="2" fill="#1e293b"/>
+<rect x="843" y="87" width="12" height="12" rx="2" fill="#0b1220"/>
+<rect x="843" y="102" width="12" height="12" rx="2" fill="#0b1220"/>
+<rect x="843" y="117" width="12" height="12" rx="2" fill="#0b1220"/>
+<rect x="843" y="132" width="12" height="12" rx="2" fill="#0b1220"/>
+<rect x="843" y="147" width="12" height="12" rx="2" fill="#0b1220"/>
+<rect x="843" y="162" width="12" height="12" rx="2" fill="#0b1220"/>
   <text x="28" y="203" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">Less</text>
   <rect x="60" y="193" width="12" height="12" rx="2" fill="#1e293b"/>
   <rect x="76" y="193" width="12" height="12" rx="2" fill="#0e4429"/>
