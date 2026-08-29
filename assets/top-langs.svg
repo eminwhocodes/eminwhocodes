@@ -7,15 +7,15 @@
   <rect x="24" y="78" width="220" height="6" rx="3" fill="#1e293b"/>
   <rect x="24" y="78" width="81" height="6" rx="3" fill="#3572A5"/>
   <text x="24" y="100" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#e2e8f0">PHP</text>
-  <text x="370" y="100" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">22.9%</text>
+  <text x="370" y="100" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">23.2%</text>
   <rect x="24" y="106" width="220" height="6" rx="3" fill="#1e293b"/>
-  <rect x="24" y="106" width="50" height="6" rx="3" fill="#4F5D95"/>
+  <rect x="24" y="106" width="51" height="6" rx="3" fill="#4F5D95"/>
   <text x="24" y="128" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#e2e8f0">JavaScript</text>
-  <text x="370" y="128" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">12.5%</text>
+  <text x="370" y="128" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">12.6%</text>
   <rect x="24" y="134" width="220" height="6" rx="3" fill="#1e293b"/>
   <rect x="24" y="134" width="28" height="6" rx="3" fill="#f1e05a"/>
   <text x="24" y="156" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#e2e8f0">HTML</text>
-  <text x="370" y="156" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">12%</text>
+  <text x="370" y="156" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">11.8%</text>
   <rect x="24" y="162" width="220" height="6" rx="3" fill="#1e293b"/>
   <rect x="24" y="162" width="26" height="6" rx="3" fill="#e34c26"/>
   <text x="24" y="184" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#e2e8f0">CSS</text>
